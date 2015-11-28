@@ -10,10 +10,8 @@
   = select :provider, :status, @all_statuses
 
   = label :provider, :specialty, 'Specialty'
-    - @all_specialties.each do |specialty|
-        specialty
-        = check_box_tag specialty
-      end
+  - @all_specialties.each do |specialty|
+    = specialty
+    = check_box_tag specialty
 
   = submit_tag 'Submit'
-
