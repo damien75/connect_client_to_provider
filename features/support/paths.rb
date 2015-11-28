@@ -17,6 +17,8 @@ module NavigationHelpers
       '/'
     when /^the welcome page$/
       welcome_index_path
+    when /^the new provider\s? page$/
+      new_provider_path
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
