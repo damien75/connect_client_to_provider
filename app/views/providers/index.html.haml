@@ -1,0 +1,19 @@
+%h1 All Providers
+
+%table#providers
+  %thead
+    %tr
+      %th Company
+      %th Status
+      %th Specialties
+      %th Added on
+      %th More Info
+  %tbody
+    - @providers.each do |provider|
+      %tr
+        %td= provider.company 
+        %td= provider.status
+        %td= provider.added_to_db_date
+        %td= 'link_to "More about #{movie.title}", movie_path(movie)'
+
+= link_to 'Add new provider', new_provider_path
