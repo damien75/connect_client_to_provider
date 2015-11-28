@@ -12,10 +12,33 @@ Background: Providers in database
   | Company 2      | private    | specialty 1 |   1982-06-25     |
   | Company 3      | private    | specialty 2 |   1979-05-25     |
   | Company 4      | public     | specialty 2 |   1971-03-11     |
-  
-  And I am on the providers home page
+
+Scenario: Add a new provider to the list
+  When I am on the providers new page
+  And I fill in the following:
+     | company          | Company 5   |
+     | status           | private     |
+     | specialty        | specialty 1 |
+     | added_to_db_date | 5.years.ago |
+  And I press "Submit"
+  Then I should be on the edit page for "Company 5"
+  And I should see "Company 5"
+
+Scenario: Try to add a provider that already exists to the list and fail
+  When I am on the providers new page
+  And I fill in the following:
+     | company          | Company 4   |
+     | status           | private     |
+     | specialty        | specialty 1 |
+     | added_to_db_date | 5.years.ago |
+  And I press "Submit"
+  Then I should be on the providers home page
+  And I should see a warning message
+  And I should see "The movie Company 4 already existed and could not be added"
+  And I should see "You can try to update it"
 
 Scenario: See all existing providers by default
+  When I am on the providers home page
   Then I should see all the providers
   
 Scenario: Restrict to providers with public status
