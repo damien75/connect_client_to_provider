@@ -143,7 +143,7 @@ Then /^the "([^"]*)" field(?: within (.*))? should contain "([^"]*)"$/ do |field
     field = find_field(field)
     field_value = (field.tag_name == 'textarea') ? field.text : field.value
     if field_value.respond_to? :should
-      expect(field_value).to =~ /#{value}/
+      expect(field_value).to =~ /#{value}/  #TODO:change =~ deprecated
     else
       assert_match(/#{value}/, field_value)
     end
@@ -155,7 +155,7 @@ Then /^the "([^"]*)" field(?: within (.*))? should not contain "([^"]*)"$/ do |f
     field = find_field(field)
     field_value = (field.tag_name == 'textarea') ? field.text : field.value
     if field_value.respond_to? :should_not
-      expect(field_value).to_not =~ /#{value}/
+      expect(field_value).to_not =~ /#{value}/   #TODO:change =~ deprecated
     else
       assert_no_match(/#{value}/, field_value)
     end
@@ -226,11 +226,11 @@ Then /^the "([^"]*)" checkbox(?: within (.*))? should not be checked$/ do |label
     end
   end
 end
- 
+
 Then /^(?:|I )should be on (.+)$/ do |page_name|
   current_path = URI.parse(current_url).path
   if current_path.respond_to? :should
-    expect(current_path).to == path_to(page_name)
+    expect(current_path).to eq path_to(page_name)
   else
     assert_equal path_to(page_name), current_path
   end
@@ -240,10 +240,10 @@ Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
   query = URI.parse(current_url).query
   actual_params = query ? CGI.parse(query) : {}
   expected_params = {}
-  expected_pairs.rows_hash.each_pair{|k,v| expected_params[k] = v.split(',')} 
-  
+  expected_pairs.rows_hash.each_pair{|k,v| expected_params[k] = v.split(',')}
+
   if actual_params.respond_to? :should
-    expect(actual_params).to == expected_params
+    expect(actual_params).to eq expected_params
   else
     assert_equal expected_params, actual_params
   end
@@ -251,4 +251,8 @@ end
 
 Then /^show me the page$/ do
   save_and_open_page
+end
+
+And /^I should see a warning message saying: "(.*)"$/ do |warning_message|
+  expect(page).to have_xpath('.//div[@id = "notice"]', text: warning_message)
 end
