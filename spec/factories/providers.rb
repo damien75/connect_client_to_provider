@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :provider do
-    company "MyString"
-status "MyString"
-specialty "MyString"
-added_to_db_date "2015-11-28 14:16:18"
+    company 'New Company'
+    status 'public'
+    specialty 'specialty 1'
+    added_to_db_date Time.now
   end
 
 end
