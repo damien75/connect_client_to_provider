@@ -3,10 +3,11 @@ require 'rails_helper'
 describe Provider, type: :model do
   describe "DB with providers" do
     before :each do
-      @provider1 = Provider.create!(:company => "Company 1" , :status => "public" , :specialty => "specialty 1")
-      @provider2 = Provider.create!(:company => "Company 2" , :status => "private" , :specialty => "specialty 2")
-      @provider3 = Provider.create!(:company => "Company 3" , :status => "private" , :specialty => "specialty 1")
-      @provider4 = Provider.create!(:company => "Company 4" , :status => "public" , :specialty => "specialty 2")
+      @provider1 = Provider.create!(:name => "name 1" , :status => "public" , :specialty => "specialty 1")
+      @provider2 = Provider.create!(:name => "name 2" , :status => "private" , :specialty => "specialty 2")
+      @provider3 = Provider.create!(:name => "name 3" , :status => "private" , :specialty => "specialty 1")
+      @provider4 = Provider.create!(:name => "name 4" , :status => "public" , :specialty => "specialty 2")
+      @status = Status.create!(:title => "public" , :description => "Professional provider name")
     end
 
     it "should contain all the providers" do
@@ -18,37 +19,37 @@ describe Provider, type: :model do
 
     describe "Adding a new provider" do
       it "sould increase the number of providers by 1" do
-        @newProvider = Provider.create!(:company => "Company 5" , :status => "public" , :specialty => "specialty 1")
+        @newProvider = Provider.create!(:name => "name 5" , :status => "public" , :specialty => "specialty 1")
         expect(Provider.count).to eq(5)
       end
 
       describe "Adding a new provider should fail with missing information" do
         it "passes validation with a all information" do
-          testProvider = Provider.new(:company => "test company" , :status => "test status" , :specialty => "test specialty")
+          testProvider = Provider.new(:name => "test name" , :status => "test status" , :specialty => "test specialty")
           expect(testProvider).to be_valid
         end
 
-        it "fails validation with no company" do
-          testProvider = Provider.new(:company => nil)
+        it "fails validation with no name" do
+          testProvider = Provider.new(:name => nil)
           expect(testProvider).to_not be_valid
-          expect(testProvider.errors[:company]).to include "can't be blank"
+          expect(testProvider.errors[:name]).to include "can't be blank"
         end
 
-        it "is invalid if duplicate company" do
-          Provider.create!(:company => "test company" , :status => "test status" , :specialty => "test specialty")
-          testProvider = Provider.new(:company => "test company" , :status => "test status" , :specialty => "test specialty")
+        it "is invalid if duplicate name" do
+          Provider.create!(:name => "test name" , :status => "test status" , :specialty => "test specialty")
+          testProvider = Provider.new(:name => "test name" , :status => "test status" , :specialty => "test specialty")
           expect(testProvider).to_not be_valid
-          expect(testProvider.errors[:company]).to include "has already been taken"
+          expect(testProvider.errors[:name]).to include "has already been taken"
         end
 
         it "fails validation with no status" do
-          testProvider = Provider.new(:company => "test company" , :specialty => "test specialty")
+          testProvider = Provider.new(:name => "test name" , :specialty => "test specialty")
           expect(testProvider).to_not be_valid
           expect(testProvider.errors[:status]).to include "can't be blank"
         end
 
         it "fails validation with no specialty" do
-          testProvider = Provider.new(:company => "test company" , :status => "test status")
+          testProvider = Provider.new(:name => "test name" , :status => "test status")
           expect(testProvider).to_not be_valid
           expect(testProvider.errors[:specialty]).to include "can't be blank"
         end

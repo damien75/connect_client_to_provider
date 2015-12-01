@@ -3,7 +3,7 @@
 %table#providers
   %thead
     %tr
-      %th Company
+      %th Name
       %th Status
       %th Specialties
       %th Added on
@@ -11,7 +11,7 @@
   %tbody
     - @providers.each do |provider|
       %tr
-        %td= provider.company 
+        %td= provider.name
         %td= provider.status
         %td= provider.added_to_db_date
         %td= 'link_to "More about #{movie.title}", movie_path(movie)'

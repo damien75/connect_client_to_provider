@@ -3,8 +3,8 @@
 %h2 Press Submit to see your addition applied
 
 = form_tag providers_path do
-  = label :provider, :company, 'Company'
-  = text_field :provider, 'company'
+  = label :provider, :name, 'Name'
+  = text_field :provider, 'name'
 
   = label :provider, :status, 'Status'
   = select :provider, :status, @all_statuses
